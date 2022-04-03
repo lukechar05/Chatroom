@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png"  href="/static/icons8-falcon-48.png"> 
+
+        <title>Login or Signup</title>
+
+    </head>
+
+    <body>
+        
+        <h1> Welcome to The Chat Experience</h1>
+
+     
+        <form action="{{ url_for('onboardFunc', auth = 'return') }}" method = "get">
+            <input class = "loginButton" type="submit" value = "Login">
+        </form>
+
+       <h2> Or if you are a first time chatter </h2>
+
+       <form action="{{ url_for('onboardFunc', auth = 'new') }}" method = "get">
+            <input class = "loginButton" type="submit" value = "Signup">
+        </form>
+        
+    </body>
+</html>

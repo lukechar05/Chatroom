@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png"  href="/static/icons8-falcon-48.png"> 
+       
+
+        <title>Create Chatroom</title>
+
+    </head>
+
+    <body>
+        <h1> Create Your Chatroom</h1>
+
+        <form action="{{ url_for('createRoomFunction', what = 'create') }}" method = "post">
+
+            <input type="text" name="Roomname">
+            <input type="submit" value = "Create Room">
+
+        </form>
+
+    </body>
+</html>

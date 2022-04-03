@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png"  href="/static/icons8-falcon-48.png">
+        
+        <title>Landing Page</title>
+
+    </head>
+
+    <body>
+        
+
+        
+        <h1> Select your favorite chatroom </h1>
+
+        {%if chatrooms is defined and chatrooms|length > 0%}
+
+            {%for chatroom in chatrooms%}
+
+                {{chatroom.name}}
+                <form action="{{ url_for('landingFunctions', what = 'join', chatroom_id = chatroom.id) }}" method = "get">
+                    <input type="submit" value = "Join Room">
+                </form>
+
+                <br>
+
+                {% if chatroom.creator_id == user %}
+                    <form action="{{ url_for('landingFunctions', what = 'delete', chatroom_id = chatroom.id) }}" method = "post">
+                        <input type="submit" id="deleteButton" value = "Delete Your Room">
+                    </form>
+                {%endif%}
+
+                <hr><br/>
+
+            {%endfor%}
+
+        {%else%}
+            <p>There are no rooms created for you to join! </p>
+            
+        {%endif%}
+       
+
+       
+
+
+
+
+        <form action="{{ url_for('landingFunctions', what = 'create', chatroom_id = 0) }}" method = "get">
+            <input type="submit" value = "Create Room">
+        </form>
+        
+        <form action="{{ url_for('landingFunctions', what = 'logout', chatroom_id = 0) }}" method = "get">
+            <input type="submit" value = "Logout">
+        </form>
+    
+    </body>
+</html>

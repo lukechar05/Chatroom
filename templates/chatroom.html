@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png"  href="/static/icons8-falcon-48.png"> 
+        <script type="text/javascript" src="{{ url_for('static', filename='messages.js') }}"></script>
+
+        <title>Chatroom</title>
+
+    </head>
+
+    <body>
+
+        <div id = "delete" style = "visibility: hidden;">
+            <p> This room has been deleted </p>
+
+            <form action="{{ url_for('roomFunctions', what = 'back') }}" method = "get">
+                <input type="submit" value = "Go Back">
+            </form>
+        </div>
+
+
+        <h1> Current Chats </h1>
+
+        <table id = "chatTable"> </table>
+            {% for chat in chats %}
+            
+                <tr> chat </tr>
+            {%endfor%}
+
+        
+        <form id="Form">
+			<input type="text" id="message" name="Chat Message" value="" />
+			<input type="button" id="theButton" value="Post"/>
+		</form>
+
+        <form action="{{ url_for('roomFunctions', what = 'logout') }}" method = "get">
+            <input type="submit" value = "Logout">
+        </form>
+
+        
+    </body>
+</html>
