@@ -32,6 +32,8 @@ def initdb_command():
 
 
 
+
+
 def room_exists(room_id): 
 	r = Chatroom.query.filter_by(id=room_id).first()
 
@@ -50,11 +52,15 @@ def loginPage():
 # ----------------------------------------------------------------------------------------------------------------------------------------------#
 # Authenticate
 
+
 @app.route('/onboard<auth>', methods = ['GET'])
 def onboardFunc(auth): 
 
+	# new user
 	if auth == "new":
 		return render_template('signup.html')
+	
+	# returning user 
 	else: 
 		return render_template('login.html')
 
@@ -73,6 +79,7 @@ def signup():
 	session['user_id'] = user.id
 	chatrooms = Chatroom.query.all()
 
+	# Send list of current chatrooms to the landing page for users
 	return render_template('landing.html', chatrooms = chatrooms, user = session['user_id'])
 
 
@@ -88,14 +95,15 @@ def login():
 
 	if user is None: 
 		error = "Invalid Username" 
+		render_template("login.html")  # keep them on the same screen
 
 	elif password != user.password:
 		error = "Invalid Password"
+		render_template("login.html") # don't let them login without correct password
 	
 	else: 
 		flash('A user was logged in')
 		session['user_id'] = user.id
-
 		chatrooms = Chatroom.query.all()
 		return render_template('landing.html', chatrooms = chatrooms, user = session['user_id'])
 
@@ -108,7 +116,7 @@ def createRoomFunction(what):
 	if what == 'create':
 
 		name = request.form['Roomname']
-		chatroom = Chatroom(name, session['user_id'])
+		chatroom = Chatroom(name, session['user_id'])  # get the user who created this room 
 		db.session.add(chatroom)
 		db.session.commit()
 		chatrooms = Chatroom.query.all()
@@ -117,6 +125,7 @@ def createRoomFunction(what):
 	else:
 		return render_template('onboard.html')
 
+#  All routes from landing page, create room, delete room, join room, and logout 
 @app.route('/landing<what><chatroom_id>', methods=['GET', 'POST'])
 def landingFunctions(what, chatroom_id): 
 
@@ -142,7 +151,7 @@ def landingFunctions(what, chatroom_id):
 # ----------------------------------------------------------------------------------------------------------------------------------------------#
 # Chatroom create messages
 
-
+#
 @app.route("/new_chat", methods=["POST"])
 def add():
 
@@ -164,6 +173,7 @@ def add():
 	return json.dumps(chats)
 
 
+# Polling for new chats 
 @app.route("/chats")
 def get_items():
 
@@ -181,31 +191,16 @@ def get_items():
 	else:
 		return json.dumps(chats), 404
 
-@app.route("/addRoom")
-def add_Rooms(): 
-	rooms = [] 
-	
-	allRooms = Chatroom.query.all() 
-	for room in allRooms: 
-		roomName = room.name
-		rooms.append(roomName)
-
-	return json.dumps(rooms)
-
-@app.route("/addRoomID")
-def add_roomID(): 
-	roomID = [] 
-
-
-
-
-
-
 
 @app.route("/chatroom<what>")
 def roomFunctions(what):
 	if what == "logout":
 		return render_template("onboard.html")
 
+	# when room gets deleted
 	elif what == "back":
-		return render_template("landing.html")
+
+		chatrooms = Chatroom.query.all()
+		return render_template("landing.html", chatrooms = chatrooms, user = session['user_id'])
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------#

@@ -14,13 +14,14 @@
         
         <h1> Welcome to The Chat Experience</h1>
 
-     
+        <!--  Login  -->
         <form action="{{ url_for('onboardFunc', auth = 'return') }}" method = "get">
             <input class = "loginButton" type="submit" value = "Login">
         </form>
 
        <h2> Or if you are a first time chatter </h2>
 
+        <!--  signup  -->
        <form action="{{ url_for('onboardFunc', auth = 'new') }}" method = "get">
             <input class = "loginButton" type="submit" value = "Signup">
         </form>

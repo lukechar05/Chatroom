@@ -1,0 +1,15 @@
+ul { 
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    width: 30%;
+    
+}
+
+li { 
+    margin-right: 5%;
+}
+input { 
+    background-color: bisque;
+    color: black;
+}

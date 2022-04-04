@@ -13,17 +13,21 @@
 
     <body>
 
+
+        <!--  For users in the room when it gets deleted -->
         <div id = "delete" style = "visibility: hidden;">
             <p> This room has been deleted </p>
 
             <form action="{{ url_for('roomFunctions', what = 'back') }}" method = "get">
                 <input type="submit" value = "Go Back">
             </form>
+
         </div>
 
-
+        
         <h1> Current Chats </h1>
 
+        <!--  table to showcase chats for this chatroom  -->
         <table id = "chatTable"> </table>
             {% for chat in chats %}
             
@@ -33,8 +37,9 @@
         
         <form id="Form">
 			<input type="text" id="message" name="Chat Message" value="" />
-			<input type="button" id="theButton" value="Post"/>
+			<input type="button" id="postButton" value="Post"/>
 		</form>
+
 
         <form action="{{ url_for('roomFunctions', what = 'logout') }}" method = "get">
             <input type="submit" value = "Logout">
